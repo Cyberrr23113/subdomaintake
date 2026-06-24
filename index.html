@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bir Türk Davası </title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+:root {
+  --bg-color: #0a0f1c;
+  --flag-opacity: 0.2;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: #ccc;
+  font-family: 'Roboto Mono', monospace;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: default;
+  animation: subtleBodyShift 18s infinite ease-in-out;
+}
+
+ 
+#flag-background {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnJtMzRla3FuNjhqZnJwZWVtbmZ1dDhhcWgza3dyZnc5dXRyZ2hjayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gRYU8xhzdIqH5oeI1P/giphy.gif');
+  background-size: cover; background-position: center; opacity: var(--flag-opacity); z-index: -10;
+  animation: flagPulsate 18s infinite alternate, flagGlitch 25s infinite steps(1);
+}
+
+.overlay-grid, .overlay-scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -8; }
+.overlay-grid { background-image: linear-gradient(rgba(30, 80, 150, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(30, 80, 150, 0.025) 1px, transparent 1px); background-size: 35px 35px; animation: gridMove 25s linear infinite; }
+@keyframes gridMove { to { background-position: 70px 70px; } }
+.overlay-scanlines { background: linear-gradient(to bottom, rgba(25,30,60,0) 0%, rgba(25,30,60,0.04) 50%, rgba(25,30,60,0) 100%); background-size: 100% 4px; animation: scanlineMove 0.25s linear infinite; }
+@keyframes scanlineMove { to { background-position: 0 4px; } }
+
+/* --- İçerik --- */
+.breach-container { position: relative; text-align: center; padding: 20px; z-index: 1; max-width: 95%; }
+.main-title {
+  font-family: 'Aldrich', sans-serif; font-size: clamp(2rem, 10vw, 6rem); color: #fff; text-transform: uppercase;
+  letter-spacing: 0.08em; position: relative; margin-bottom: 35px; display: block;
+}
+.main-title .char { display: inline-block; opacity: 0; transform: translateY(40px) scale(0.6); animation: charAppear 0.45s forwards, charRgbShift 4.5s infinite alternate; }
+@keyframes charAppear { to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes charRgbShift { 0%, 100% { text-shadow: 0 0 6px #ff2266; color: #ff99bb; } 33% { text-shadow: 0 0 6px #22ffbb; color: #99ffee; } 66% { text-shadow: 0 0 6px #6622ff; color: #cc99ff; } }
+
+.sub-message { font-size: clamp(0.85rem, 2.3vw, 1.15rem); color: #b0d0f0; opacity: 0; animation: fadeInTextExtended 2s 1.8s forwards; }
+@keyframes fadeInTextExtended { from { opacity:0; transform: translateY(15px); } to { opacity:1; transform: translateY(0px); } }
+
+.signature-zone { font-family: 'Aldrich', sans-serif; margin-top: 45px; opacity: 0; animation: fadeInTextExtended 2s 3.2s forwards; }
+.signature-zone strong { animation: signatureColorShift 9s infinite; }
+@keyframes signatureColorShift { 0%, 100% { color: #33bbff; } 50% { color: #ff33bb; } }
+
+#mouse-aura { position: fixed; width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle, rgba(0, 200, 255, 0.4) 0%, rgba(0, 200, 255, 0) 70%); pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: opacity 0.3s; }
+.particle { position: fixed; pointer-events: none; z-index: 9999; animation: particleFloat 2s forwards; }
+@keyframes particleFloat { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100px) scale(0); opacity: 0; } }
+</style>
+</head>
+<body>
+
+
+<iframe src="https://f.top4top.io/m_3797rctcm1.mp3" allow="autoplay" style="display:none" id="iframeAudio"></iframe>
+
+
+<audio id="bgMusic" loop autoplay>
+  <source src="https://f.top4top.io/m_3797rctcm1.mp3" type="audio/mpeg">
+</audio>
+
+<div id="flag-background"></div>
+<div class="overlay-grid"></div>
+<div class="overlay-scanlines"></div>
+<div id="mouse-aura"></div>
+
+<div class="breach-container">
+<h1 class="main-title">
+<span class="char"></span><span class="char"></span><span class="char"></span><span class="char"></span><span class="char"></span><span class="char"></span>
+<span class="sub-title-part" style="font-size: 0.5em; vertical-align: middle; margin-left: 0.5em; color: #dde;">Allah Affetsin Çünkü Ben Affetmedim</span>
+</h1>
+<p class="sub-message"><span style="color:#ff3366"></span></p>
+<div class="signature-zone"><strong>HaN cryber3301RD oguz Emir NovaSploit XroFdes Mesaofgod </strong></div>
+</div>
+
+<script>
+const music = document.getElementById('bgMusic');
+
+
+function startMusic() {
+  music.play().then(() => {
+    console.log("Müzik başarıyla otomatik başladı.");
+  }).catch((error) => {
+    console.log("Tarayıcı engelledi, etkileşim bekleniyor...");
+  });
+}
+
+
+window.addEventListener('load', startMusic);
+
+
+document.addEventListener('mousemove', function() {
+  startMusic();
+}, { once: true }); 
+
+document.addEventListener('keydown', function() {
+  startMusic();
+}, { once: true });
+
+
+document.addEventListener('mousemove', function(e) {
+  const aura = document.getElementById('mouse-aura');
+  aura.style.left = e.pageX + 'px';
+  aura.style.top = e.pageY + 'px';
+  aura.style.opacity = '1';
+  if (Math.random() > 0.8) createParticle(e.pageX, e.pageY);
+});
+
+function createParticle(x, y) {
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+  particle.textContent = ['0', '1', '#', '*'][Math.floor(Math.random() * 4)];
+  particle.style.color = '#33ff99';
+  particle.style.left = x + 'px';
+  particle.style.top = y + 'px';
+  document.body.appendChild(particle);
+  setTimeout(() => particle.remove(), 2000);
+}
+</script>
+</body>
+</html>
